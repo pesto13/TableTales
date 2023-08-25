@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Creazione Prenotazione{% endblock %}
+
+{% block content %}
+  <h1>Creazione Prenotazione</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+    <button type="submit">Invia Prenotazione</button>
+  </form>
+{% endblock %}
