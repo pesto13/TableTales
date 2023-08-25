@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  {% if restaurants.count == 0 %}
+
+    <p> Non ci sono ristoranti ancora</p>
+
+  {% else %}
+    {% for r in restaurants %}
+
+    {#TODO fare una bella pagina con link dove premo#}
+
+      <li>
+        <a href="{% url 'restaurant_detail' r.pk %}" >{{ r.Name }} </a>
+      </li>
+
+    {% endfor %}
+  {% endif %}
+
+
+{% endblock %}
