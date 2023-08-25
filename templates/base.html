@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}Titolo del Sito{% endblock %}</title>
+</head>
+<body>
+  <header>
+    <h1>{% block header %}Intestazione del Sito{% endblock %}</h1>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about/">About</a></li>
+          <!-- Aggiungi altre voci di menu qui -->
+        </ul>
+      </nav>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <p>&copy; {{ year }} Francesco Bellodi. Tutti i diritti riservati.</p>
+  </footer>
+</body>
+</html>
