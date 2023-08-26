@@ -10,6 +10,7 @@ from django.views.generic.edit import CreateView
 from .forms import ReservationForm
 from .models import Reservation
 
+
 class ReservationCreateView(CreateView):
     form_class = ReservationForm
     # fields = ['restaurant', 'username', 'reservation_date', 'entry_date', 'status']

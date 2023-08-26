@@ -17,7 +17,7 @@ class Review(models.Model):
     value_price_rating = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     service_rating = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     ambiance_rating = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
-    review_date = models.DateTimeField()
+    review_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Review for {self.restaurant} by {self.user.username}"

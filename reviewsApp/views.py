@@ -4,12 +4,14 @@ from django.views.generic import ListView
 # Create your views here.
 
 from django.views.generic.edit import CreateView
+
+from .forms import ReviewForm
 from .models import Review
 
 
 class ReviewCreateView(CreateView):
-    model = Review
-    fields = ['restaurant', 'user', 'comment_title', 'comment', 'rating', 'cleanliness_rating', 'value_price_rating', 'service_rating', 'ambiance_rating']
+    form_class = ReviewForm
+
     template_name = 'review_form.html'  # Modifica con il percorso corretto al tuo template
     success_url = '/'  # Modifica con l'URL di reindirizzamento desiderato
 

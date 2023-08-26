@@ -10,7 +10,7 @@ class Reservation(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     reservation_date = models.DateTimeField()
-    entry_date = models.DateTimeField()
+    entry_date = models.DateTimeField(auto_now_add=True)
     STATUS_CHOICES = [
         ('confirmed', 'Confermata'),
         ('pending', 'In attesa'),
