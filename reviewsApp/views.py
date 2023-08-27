@@ -5,22 +5,27 @@ from django.views.generic import ListView
 
 from django.views.generic.edit import CreateView
 
+from restaurantsApp.models import Restaurant
 from .forms import ReviewForm
 from .models import Review
 
 
 class ReviewCreateView(CreateView):
     form_class = ReviewForm
+    template_name = 'review_form.html'
+    success_url = '/'
 
-    template_name = 'review_form.html'  # Modifica con il percorso corretto al tuo template
-    success_url = '/'  # Modifica con l'URL di reindirizzamento desiderato
 
+    def get_initial(self):
+        #il campo va messo hidden ma usando il field corretto
+        initial = super().get_initial()
 
-    #TODO passare i valori già correti, questo non funziona
-    def form_valid(self, form):
-        form.instance.user = self.request.user  # Imposta l'utente corrente come autore della recensione
-        # form.instance.restaurant = 3
-        return super().form_valid(form)
+        # Imposta il valore iniziale del campo "restaurant" con l'oggetto ristorante
+        restaurant_id = self.kwargs.get('pk')
+        restaurant = Restaurant.objects.get(pk=restaurant_id)
+        initial['restaurant'] = restaurant
+
+        return initial
 
 
 class ReviewListView(ListView):
