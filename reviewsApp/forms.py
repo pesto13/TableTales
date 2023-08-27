@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 
 from restaurantsApp.models import Restaurant
 from .models import Review
@@ -14,3 +15,4 @@ class ReviewForm(forms.ModelForm):
         # }
 
     restaurant = forms.ModelChoiceField(queryset=Restaurant.objects.all(), widget=forms.HiddenInput())
+    user = forms.ModelChoiceField(queryset=User.objects.all(), widget=forms.HiddenInput())

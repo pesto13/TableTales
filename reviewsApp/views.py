@@ -1,29 +1,29 @@
 from django.shortcuts import render
 from django.views.generic import ListView
 
-# Create your views here.
-
 from django.views.generic.edit import CreateView
 
+from mixins.user_mixins import LoginRequiredMixin
 from restaurantsApp.models import Restaurant
 from .forms import ReviewForm
 from .models import Review
 
 
-class ReviewCreateView(CreateView):
+class ReviewCreateView(LoginRequiredMixin, CreateView):
     form_class = ReviewForm
     template_name = 'review_form.html'
+    #TODO cambia?
     success_url = '/'
 
-
     def get_initial(self):
-        #il campo va messo hidden ma usando il field corretto
         initial = super().get_initial()
 
         # Imposta il valore iniziale del campo "restaurant" con l'oggetto ristorante
         restaurant_id = self.kwargs.get('pk')
         restaurant = Restaurant.objects.get(pk=restaurant_id)
         initial['restaurant'] = restaurant
+
+        initial['user'] = self.request.user
 
         return initial
 
