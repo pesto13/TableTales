@@ -1,8 +1,10 @@
+from django.db.models import Sum
 from django.views.generic.edit import CreateView
 
 from mixins.user_mixins import LoginRequiredMixin
 from restaurantsApp.models import Restaurant
 from .forms import ReservationForm
+from .models import Reservation
 
 
 class ReservationCreateView(LoginRequiredMixin, CreateView):
@@ -21,4 +23,23 @@ class ReservationCreateView(LoginRequiredMixin, CreateView):
 
         initial['username'] = self.request.user
 
+        #devo controllare se ho spazio
+        initial['status'] = 'confirmed'
+
         return initial
+
+    def form_valid(self, form):
+        # Esegui il controllo delle prenotazioni qui
+        restaurant = form.cleaned_data.get('restaurant')
+        how_many = form.cleaned_data.get('how_many')
+        total_guests = Reservation.objects.filter(
+            restaurant=restaurant,
+            status='confirmed'
+        ).aggregate(Sum('how_many'))["how_many__sum"]
+
+        if restaurant.max_booking - total_guests < how_many:
+            form.instance.status = 'pending'
+        else:
+            form.instance.status = 'confirmed'
+
+        return super().form_valid(form)
