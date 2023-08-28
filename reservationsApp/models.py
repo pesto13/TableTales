@@ -20,4 +20,4 @@ class Reservation(models.Model):
     how_many = models.IntegerField()
 
     def __str__(self):
-        return f"Reservation for {self.restaurant.name} by {self.username}"
+        return f"Reservation for {self.restaurant.name} by {self.username} with {self.how_many} people"

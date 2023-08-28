@@ -1,6 +1,11 @@
+from datetime import datetime, time
+
 from django.db.models import Sum
+from django.utils.timezone import make_aware
+from django.views.generic import ListView
 from django.views.generic.edit import CreateView
 
+import reservationsApp.models
 from mixins.user_mixins import LoginRequiredMixin
 from restaurantsApp.models import Restaurant
 from .forms import ReservationForm
@@ -29,17 +34,41 @@ class ReservationCreateView(LoginRequiredMixin, CreateView):
         return initial
 
     def form_valid(self, form):
-        # Esegui il controllo delle prenotazioni qui
+
         restaurant = form.cleaned_data.get('restaurant')
         how_many = form.cleaned_data.get('how_many')
+
+        date = form.cleaned_data.get('reservation_date')
+        date = date.date()
+        start_time = make_aware(datetime.combine(date, time.min))
+        end_time = make_aware(datetime.combine(date, time.max))
+
+        #fixme le date andrebbero messe non sul giorno totale :D
         total_guests = Reservation.objects.filter(
             restaurant=restaurant,
+            reservation_date__gte=start_time,
+            reservation_date__lt=end_time,
             status='confirmed'
         ).aggregate(Sum('how_many'))["how_many__sum"]
 
-        if restaurant.max_booking - total_guests < how_many:
-            form.instance.status = 'pending'
-        else:
+        if total_guests is None:
+            total_guests = 0
+
+        if restaurant.max_booking - total_guests >= how_many:
             form.instance.status = 'confirmed'
+        else:
+            form.instance.status = 'pending'
 
         return super().form_valid(form)
+
+
+class UserReservationsView(LoginRequiredMixin, ListView):
+    model = Reservation
+    template_name = 'user_reservations.html'  # Crea questo template
+    context_object_name = 'reservations'
+
+    def get_queryset(self):
+        user = self.request.user
+        return Reservation.objects.filter(username=user)
+
+

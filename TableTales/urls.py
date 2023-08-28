@@ -24,7 +24,7 @@ urlpatterns = [
 
     #navbar
     path("", TemplateView.as_view(template_name="home.html"), name="home"),
-    path("home/", TemplateView.as_view(template_name="home.html"), name="home"),
+    # path("home/", TemplateView.as_view(template_name="home.html"), name="home"),
     path("about/", TemplateView.as_view(template_name="about.html"), name="about"),
 
     #accounts
@@ -37,7 +37,8 @@ urlpatterns = [
     #reviews
     path("restaurants/<int:pk>/reviews/", include("reviewsApp.urls")),
 
+
     #reservations
     path("restaurants/<int:pk>/reservations/", include("reservationsApp.urls")),
-
+    path("user/", include("reservationsApp.urls")),
 ]

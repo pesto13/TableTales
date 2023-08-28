@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Elenco Prenotazioni</h1>
+  <ul>
+    {% for prenotazione in reservations %}
+      <li>{{ prenotazione }}</li>
+    {% empty %}
+      <li>Nessuna prenotazione effettuata.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
