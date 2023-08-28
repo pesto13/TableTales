@@ -23,7 +23,7 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
         restaurant = Restaurant.objects.get(pk=restaurant_id)
         initial['restaurant'] = restaurant
 
-        initial['user'] = self.request.user
+        initial['username'] = self.request.user
 
         return initial
 
