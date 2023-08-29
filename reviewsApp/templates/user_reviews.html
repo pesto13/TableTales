@@ -1,12 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Elenco Prenotazioni</h1>
+  <h1>Elenco Recensioni</h1>
   <ul>
-    {% for r in reviews %}
-      <li>{{ r }}</li>
+    {% for rev in reviews %}
+      <li>
+        {{ rev }}
+        <form action="{% url 'review_delete' rev.pk %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="delete-link" onclick="return confirm('Sei sicuro di voler eliminare questa recensione?')">Elimina</button>
+        </form>
+      </li>
     {% empty %}
-      <li>Nessuna recensione effettuata.</li>
+      <li>Nessuna Recensione effettuata.</li>
     {% endfor %}
   </ul>
 {% endblock %}

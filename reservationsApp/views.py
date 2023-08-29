@@ -1,6 +1,7 @@
 from datetime import datetime, time
 
 from django.db.models import Sum
+from django.urls import reverse_lazy
 from django.utils.timezone import make_aware
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView
@@ -74,7 +75,8 @@ class UserReservationsView(LoginRequiredMixin, ListView):
 
 class ReservationDeleteView(LoginRequiredMixin, DeleteView):
     model = Reservation
-    template_name = 'confirm_delete.html'
-    success_url = "/user/reservations/"
+    # se uso il tastino per cancellare li sul momento non mi serve un ulteriore template
+    # template_name = 'confirm_delete.html'
+    success_url = reverse_lazy('user_reservations')
 
 

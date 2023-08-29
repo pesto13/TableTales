@@ -4,14 +4,15 @@
   <h1>Elenco Prenotazioni</h1>
   <ul>
     {% for prenotazione in reservations %}
-      <li>{{ prenotazione }}</li>
-        <a href="{% url 'reservation_delete' prenotazione.pk %}">Elimina</a>
+      <li>
+        {{ prenotazione }}
+        <form action="{% url 'reservation_delete' prenotazione.pk %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="delete-link" onclick="return confirm('Sei sicuro di voler eliminare questa prenotazione?')">Elimina</button>
+        </form>
+      </li>
     {% empty %}
       <li>Nessuna prenotazione effettuata.</li>
-
     {% endfor %}
   </ul>
 {% endblock %}
-
-
-

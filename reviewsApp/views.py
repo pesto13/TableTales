@@ -1,7 +1,8 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views.generic import ListView
 
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, DeleteView
 
 from mixins.user_mixins import LoginRequiredMixin
 from restaurantsApp.models import Restaurant
@@ -12,7 +13,8 @@ from .models import Review
 class ReviewCreateView(LoginRequiredMixin, CreateView):
     form_class = ReviewForm
     template_name = 'review_form.html'
-    #TODO cambia?
+    #TODO cambia manca la pk :D
+    # success_url = /url/to/detailrestaurant/
     success_url = '/'
 
     def get_initial(self):
@@ -34,7 +36,6 @@ class ReviewListView(ListView):
     context_object_name = 'reviews'  # Nome della variabile di contesto nel template
 
 
-
 class UserReviewsListView(LoginRequiredMixin, ListView):
     model = Review
     template_name = 'user_reviews.html'
@@ -43,3 +44,10 @@ class UserReviewsListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         user = self.request.user
         return Review.objects.filter(username=user)
+
+
+class ReviewDeleteView(LoginRequiredMixin, DeleteView):
+    model = Review
+    # template non serve
+    success_url = reverse_lazy('user_reviews')
+
