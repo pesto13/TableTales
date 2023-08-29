@@ -17,7 +17,12 @@ class ReservationCreateView(LoginRequiredMixin, CreateView):
     form_class = ReservationForm
     # fields = ['restaurant', 'username', 'reservation_date', 'entry_date', 'status']
     template_name = 'reservation_form.html'  # Modifica con il percorso corretto al tuo template
-    success_url = '/'  # Modifica con l'URL di reindirizzamento desiderato
+
+    def get_success_url(self):
+        # Ottieni la chiave primaria (pk) del ristorante dalla richiesta
+        restaurant_pk = self.kwargs.get('pk')
+        success_url = reverse_lazy('restaurant_detail', kwargs={'pk': restaurant_pk})
+        return success_url
 
     def get_initial(self):
         initial = super().get_initial()

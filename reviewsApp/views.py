@@ -13,9 +13,6 @@ from .models import Review
 class ReviewCreateView(LoginRequiredMixin, CreateView):
     form_class = ReviewForm
     template_name = 'review_form.html'
-    #TODO cambia manca la pk :D
-    # success_url = /url/to/detailrestaurant/
-    success_url = '/'
 
     def get_initial(self):
         initial = super().get_initial()
@@ -28,6 +25,12 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
         initial['username'] = self.request.user
 
         return initial
+
+    def get_success_url(self):
+        # Ottieni la chiave primaria (pk) del ristorante dalla richiesta
+        restaurant_pk = self.kwargs.get('pk')
+        success_url = reverse_lazy('restaurant_detail', kwargs={'pk': restaurant_pk})
+        return success_url
 
 
 class ReviewListView(ListView):
