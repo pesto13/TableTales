@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Elenco Prenotazioni</h1>
+  <ul>
+    {% for r in reviews %}
+      <li>{{ r }}</li>
+    {% empty %}
+      <li>Nessuna recensione effettuata.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

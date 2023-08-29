@@ -3,7 +3,7 @@ from datetime import datetime, time
 from django.db.models import Sum
 from django.utils.timezone import make_aware
 from django.views.generic import ListView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, DeleteView
 
 import reservationsApp.models
 from mixins.user_mixins import LoginRequiredMixin
@@ -70,5 +70,11 @@ class UserReservationsView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         user = self.request.user
         return Reservation.objects.filter(username=user)
+
+
+class ReservationDeleteView(LoginRequiredMixin, DeleteView):
+    model = Reservation
+    template_name = 'confirm_delete.html'
+    success_url = "/user/reservations/"
 
 

@@ -5,8 +5,13 @@
   <ul>
     {% for prenotazione in reservations %}
       <li>{{ prenotazione }}</li>
+        <a href="{% url 'reservation_delete' prenotazione.pk %}">Elimina</a>
     {% empty %}
       <li>Nessuna prenotazione effettuata.</li>
+
     {% endfor %}
   </ul>
 {% endblock %}
+
+
+

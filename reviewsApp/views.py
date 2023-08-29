@@ -32,3 +32,14 @@ class ReviewListView(ListView):
     model = Review
     template_name = 'review_list.html'  # Modifica con il percorso corretto al tuo template
     context_object_name = 'reviews'  # Nome della variabile di contesto nel template
+
+
+
+class UserReviewsListView(LoginRequiredMixin, ListView):
+    model = Review
+    template_name = 'user_reviews.html'
+    context_object_name = 'reviews'
+
+    def get_queryset(self):
+        user = self.request.user
+        return Review.objects.filter(username=user)
