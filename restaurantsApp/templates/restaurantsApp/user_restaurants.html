@@ -1,0 +1,10 @@
+{% extends 'user-object-list.html' %}
+
+
+{% block modify %}
+
+  <a href="{% url 'restaurant_update' obj.pk %}">Edita</a>
+
+  <a href="{% url 'photo_create' obj.pk %}">Carica Foto</a>
+
+{% endblock %}

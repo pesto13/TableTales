@@ -12,6 +12,8 @@
         <button type="submit" onclick="return confirm('Sicuro di voler eliminare?')">Elimina</button>
       </form>
 
+      {% block modify %}{% endblock%}
+
     </li>
   {% empty %}
     <p>{{ obj_name }} non presenti</p>
