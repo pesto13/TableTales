@@ -14,7 +14,6 @@ class RestaurantCreateView(LoginRequiredMixin, generic.CreateView):
     def get_initial(self):
         initial = super().get_initial()
         initial['owner'] = self.request.user
-
         return initial
 
     def get_success_url(self):
@@ -23,6 +22,14 @@ class RestaurantCreateView(LoginRequiredMixin, generic.CreateView):
         return success_url
 
 
+class RestaurantOwnerListView(LoginRequiredMixin, ListView):
+    model = Restaurant
+    template_name = 'restaurantsApp/restaurant_list.html'  # Specifica il percorso al tuo template
+    context_object_name = 'restaurants'  # Nome del contesto da utilizzare nel template
+
+    def get_queryset(self):
+        user = self.request.user
+        return Restaurant.objects.filter(owner=user)
 
 
 class RestaurantListView(ListView):

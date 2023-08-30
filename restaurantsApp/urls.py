@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import RestaurantCreateView, RestaurantListView, RestaurantDetailView
+from .views import *
 
 urlpatterns = [
 
@@ -10,5 +10,6 @@ urlpatterns = [
 
     #per owner
     path("create/", RestaurantCreateView.as_view(), name='restaurant_create'),
+    path("own-restaurants/", RestaurantOwnerListView.as_view(), name='user_restaurants'),
 
 ]

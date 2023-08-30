@@ -35,6 +35,7 @@ urlpatterns = [
 
     #restaurants
     path("restaurants/", include("restaurantsApp.urls")),
+    path("user/", include("restaurantsApp.urls")),
 
     #reviews
     path("restaurants/<int:pk>/reviews/", include("reviewsApp.urls")),
