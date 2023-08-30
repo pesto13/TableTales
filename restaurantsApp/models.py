@@ -1,10 +1,6 @@
 from django.db import models
-
-# Create your models here.
-
-from django.db import models
-
 from django.conf import settings
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 # TODO questa è una prima versione veloce, sistemare i tipi
@@ -13,7 +9,7 @@ class Restaurant(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=200)
-    phone_number = models.CharField(max_length=20)
+    phone_number = PhoneNumberField()
     cuisine_type = models.CharField(max_length=50)
     services = models.CharField(max_length=200)
     meal_type = models.CharField(max_length=100)
