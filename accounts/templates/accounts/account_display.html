@@ -6,6 +6,7 @@
     <li><a href="{% url 'login' %}">Login</a></li>
 
   {% else %}
+    <li><a href="{% url 'restaurant_create' %}">Registra il tuo ristorante</a></li>
     <li><a href="{% url 'user_reservations' %}">Le mie prenotazioni</a></li>
     <li><a href="{% url 'user_reviews' %}">Le mie recensioni</a></li>
     <li><a href="{% url 'logout' %}">Logout</a></li>

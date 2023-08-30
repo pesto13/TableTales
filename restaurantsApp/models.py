@@ -17,8 +17,14 @@ class Restaurant(models.Model):
     cuisine_type = models.CharField(max_length=50)
     services = models.CharField(max_length=200)
     meal_type = models.CharField(max_length=100)
-    max_booking = models.IntegerField()
-    # PhotoURL = models.URLField()
+    max_booking = models.IntegerField(default=100)
 
     def __str__(self):
         return self.name
+
+
+class Photo(models.Model):
+    photoID = models.IntegerField(primary_key=True)
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='media')
+    photo_comment = models.CharField(max_length=100, default="")
