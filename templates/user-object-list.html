@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block header %}{{ title_page }}{% endblock%}
+
+{% block content %}
+  <ul>
+  {% for obj in objects %}
+    <li>
+      {{ obj }}
+      <form action="{% url obj_delete obj.pk %}" method="post">
+        {% csrf_token %}
+        <button type="submit" onclick="return confirm('Sicuro di voler eliminare?')">Elimina</button>
+      </form>
+
+    </li>
+  {% empty %}
+    <p>{{ obj_name }} non presenti</p>
+  {% endfor %}
+
+
+  </ul>
+{% endblock %}

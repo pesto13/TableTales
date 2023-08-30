@@ -16,12 +16,9 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
 
     def get_initial(self):
         initial = super().get_initial()
-
-        # Imposta il valore iniziale del campo "restaurant" con l'oggetto ristorante
         restaurant_id = self.kwargs.get('pk')
         restaurant = Restaurant.objects.get(pk=restaurant_id)
         initial['restaurant'] = restaurant
-
         initial['username'] = self.request.user
 
         return initial
@@ -41,8 +38,15 @@ class ReviewListView(ListView):
 
 class UserReviewsListView(LoginRequiredMixin, ListView):
     model = Review
-    template_name = 'user_reviews.html'
-    context_object_name = 'reviews'
+    template_name = 'user-object-list.html'
+    context_object_name = 'objects'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["obj_delete"] = 'review_delete'
+        context["title_page"] = 'Le mie recensioni'
+        context["obj_name"] = 'Recensioni'
+        return context
 
     def get_queryset(self):
         user = self.request.user
@@ -51,6 +55,5 @@ class UserReviewsListView(LoginRequiredMixin, ListView):
 
 class ReviewDeleteView(LoginRequiredMixin, DeleteView):
     model = Review
-    # template non serve
     success_url = reverse_lazy('user_reviews')
 

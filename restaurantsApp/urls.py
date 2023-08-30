@@ -10,6 +10,8 @@ urlpatterns = [
 
     #per owner
     path("create/", RestaurantCreateView.as_view(), name='restaurant_create'),
+    path("<int:pk>/delete/", RestaurantDeleteView.as_view(), name='restaurant_delete'),
     path("own-restaurants/", RestaurantOwnerListView.as_view(), name='user_restaurants'),
+
 
 ]

@@ -70,8 +70,15 @@ class ReservationCreateView(LoginRequiredMixin, CreateView):
 
 class UserReservationsView(LoginRequiredMixin, ListView):
     model = Reservation
-    template_name = 'user_reservations.html'  # Crea questo template
-    context_object_name = 'reservations'
+    template_name = 'user-object-list.html'
+    context_object_name = 'objects'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["obj_delete"] = 'reservation_delete'
+        context["title_page"] = 'Le mie prenotazioni'
+        context["obj_name"] = 'Prenotazioni'
+        return context
 
     def get_queryset(self):
         user = self.request.user
