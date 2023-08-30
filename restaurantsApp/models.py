@@ -10,9 +10,9 @@ class Restaurant(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=200)
     phone_number = PhoneNumberField()
-    cuisine_type = models.CharField(max_length=50)
-    services = models.CharField(max_length=200)
-    meal_type = models.CharField(max_length=100)
+    cuisine_type = models.CharField(max_length=200)
+    # services = models.CharField(max_length=200)
+    meal_type = models.CharField(max_length=200)
     max_booking = models.IntegerField(default=100)
 
     def __str__(self):

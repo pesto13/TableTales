@@ -61,12 +61,12 @@ class RestaurantDeleteView(OwnerAccessMixin, DeleteView):
 
 class RestaurantUpdateView(OwnerAccessMixin, UpdateView):
     model = Restaurant
+    # form_class = RestaurantCreateForm
     success_url = reverse_lazy('user_restaurants')
-    fields = ['name', 'address', 'phone_number', 'cuisine_type', 'services', 'meal_type']
+    fields = ['name', 'address', 'phone_number', 'cuisine_type','meal_type']
     template_name = 'restaurantsApp/restaurant_create.html'
 
     # FIXME
-
     # def get_initial(self):
     #     initial = super().get_initial()
     #     update_obj = self.get_object()
