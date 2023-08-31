@@ -9,7 +9,8 @@ class ReviewForm(forms.ModelForm):
 
     class Meta:
         model = Review
-        fields = ['restaurant', 'username', 'comment_title', 'comment', 'rating', 'cleanliness_rating', 'value_price_rating', 'service_rating', 'ambiance_rating']
+        # fields = ['restaurant', 'username', 'comment_title', 'comment', 'rating', 'cleanliness_rating', 'value_price_rating', 'service_rating', 'ambiance_rating']
+        fields = ['restaurant', 'username', 'comment_title', 'comment', 'rating']
         # widgets = {
         #     'rating': forms.NumberInput(attrs={'class': 'Stars'}),
         # }

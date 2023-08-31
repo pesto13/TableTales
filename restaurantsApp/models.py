@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from phonenumber_field.modelfields import PhoneNumberField
+from reviewsApp.models import Review
 
 
 # TODO questa è una prima versione veloce, sistemare i tipi
@@ -15,8 +16,17 @@ class Restaurant(models.Model):
     meal_type = models.CharField(max_length=200)
     max_booking = models.IntegerField(default=100)
 
+    average_rating = models.FloatField(default=0, null=True)
+
     def __str__(self):
         return self.name
+
+    def average_rating_update(self):
+        reviews = self.review_set.all()  # Ottieni tutte le recensioni associate al ristorante
+        if reviews:
+            media = sum(review.rating for review in reviews) / len(reviews)
+            return round(media, 2)  # Arrotonda la media a due decimali
+        return 0  # Nessuna recensione
 
 
 class Photo(models.Model):

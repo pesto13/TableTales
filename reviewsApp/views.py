@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView
 
@@ -28,6 +28,18 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
         restaurant_pk = self.kwargs.get('pk')
         success_url = reverse_lazy('restaurant_detail', kwargs={'pk': restaurant_pk})
         return success_url
+
+    def form_valid(self, form):
+        restaurant_pk = self.kwargs.get('pk')
+        restaurant = get_object_or_404(Restaurant, pk=restaurant_pk)
+
+        # ... Altri codici per creare la recensione ...
+
+        # Aggiorna la valutazione media del restaurant
+        restaurant.average_rating = restaurant.average_rating_update()
+        restaurant.save()
+
+        return super().form_valid(form)
 
 
 class ReviewListView(ListView):
