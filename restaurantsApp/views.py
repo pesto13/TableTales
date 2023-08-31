@@ -54,31 +54,30 @@ class RestaurantDetailView(DetailView):
 
 class RestaurantDeleteView(OwnerAccessMixin, DeleteView):
     model = Restaurant
-    # se uso il tastino per cancellare li sul momento non mi serve un ulteriore template
-    # template_name = 'confirm_delete.html'
     success_url = reverse_lazy('user_restaurants')
 
 
 class RestaurantUpdateView(OwnerAccessMixin, UpdateView):
-    model = Restaurant
-    # form_class = RestaurantCreateForm
+    # model = Restaurant
+    form_class = RestaurantCreateForm
     success_url = reverse_lazy('user_restaurants')
-    fields = ['name', 'address', 'phone_number', 'cuisine_type','meal_type']
+    # fields = ['name', 'address', 'phone_number', 'cuisine_type','meal_type']
     template_name = 'restaurantsApp/restaurant_create.html'
 
-    # FIXME
-    # def get_initial(self):
-    #     initial = super().get_initial()
-    #     update_obj = self.get_object()
-    #
-    #     # for field in update_obj._meta.fields:
-    #     #     field_name = field.name
-    #     #     field_value = getattr(update_obj, field_name)
-    #     #     initial[field_name] = field_value
-    #
-    #
-    #
-    #     return initial
+    def get_queryset(self):
+        pk = self.kwargs.get('pk')
+        return Restaurant.objects.filter(restaurantID=pk)
+
+    def get_initial(self):
+        from .forms import CUISINE_CHOICES, MEAL_CHOICES
+
+        initial = super().get_initial()
+        update_obj: Restaurant = self.get_object()
+
+        initial['cuisine_type'] = [c[0] for c in CUISINE_CHOICES if c[0] in update_obj.cuisine_type]
+        initial['meal_type'] = [m[0] for m in MEAL_CHOICES if m[0] in update_obj.meal_type]
+
+        return initial
 
 
 class PhotoCreateView(OwnerAccessMixin, CreateView):
