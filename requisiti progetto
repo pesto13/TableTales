@@ -1,0 +1,57 @@
+Sistema di prenotazione ristorante.
+Applicazione Web per la gestione di un sistema di prenotazione al ristorante e recensioni simile a TripAdvisor.com
+L'applicazione è pensata per essere usata da utenti anonimi e utenti registrati
+
+Gli utenti anonimi posso cercare ristoranti disponibili e leggere le recensioni.
+Se vogliono scrivere recensioni o prenotare devono obbligatoriamente registrarsi.
+
+Gli utenti registrati possono effettuare prenotazioni e gestirle(modifca, cancellazione) e vederne lo storico.
+
+I proprietari delle strutture possono, dopo essersi registrati come tali, inserire il proprio Ristorante
+completo delle informazioni sotto riportate.
+
+
+informazioni che salvo per ogni Ristorante:
+	
+	-nome
+	
+	-indirizzo
+
+	-tipo di cucina (caselle da spuntare):
+		-orientale
+		-italiano
+		-indiano
+		-bar
+		-etc...
+		
+		
+	-tipo di pasto (orario di apertura)
+		-colazione
+		-pranzo
+		-cena
+	
+	-foto del locale
+		le foto devono essere caricate sul sito dal gestore
+
+features:
+
+	#ricerca di quello che voglio sui criteri sopra specificati, potendo applicare filtri e ordinamento
+	
+	#prenotazioni, fai apparire un calendario colorato in base alle disponibilità del locale
+		#gestione di una lista di attesa
+		#vedere storico prenotazioni
+	
+	#recensioni
+	
+		quando faccio recensione metto
+		
+		-commento (testo)
+		-valutazione da 1 a 5 (stelle)
+		
+		ulteriori valutazioni più dettagliate (1 a 5 pallini con emoticon):
+		
+			.pulizia
+			.qualità/prezzo
+			.servizio
+			.atmosfera
+	

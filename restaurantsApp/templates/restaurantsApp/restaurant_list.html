@@ -2,8 +2,27 @@
 
 {% block content %}
 
-  {% if restaurants.count == 0 %}
+  <form method="get">
+    <input type="text" name="order_field" placeholder="Campo di ordinamento">
 
+    <input type="text" name="filter_name" placeholder="Filtro per Nome">
+    <input type="number" name="filter_max_booking" placeholder="Quanto grande il ristorante">
+    <select name="filter_cuisine_type">
+        <option value="">Seleziona un tipo di cucina</option>
+        {% for value, label in CUISINE_CHOICES %}
+            <option value="{{ value }}">{{ label }}</option>
+        {% endfor %}
+    </select>
+    <select name="filter_meal_type">
+        <option value="">Seleziona un tipo</option>
+        {% for value, label in MEAL_CHOICES %}
+            <option value="{{ value }}">{{ label }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Applica</button>
+  </form>
+
+  {% if restaurants.count == 0 %}
     <p> Non ci sono ristoranti ancora</p>
 
   {% else %}

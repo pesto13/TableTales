@@ -45,6 +45,41 @@ class RestaurantListView(ListView):
     template_name = 'restaurantsApp/restaurant_list.html'  # Specifica il percorso al tuo template
     context_object_name = 'restaurants'  # Nome del contesto da utilizzare nel template
 
+    def get_context_data(self, **kwargs):
+        from .forms import CUISINE_CHOICES, MEAL_CHOICES
+        context = super().get_context_data(**kwargs)
+        context['CUISINE_CHOICES'] = CUISINE_CHOICES
+        context['MEAL_CHOICES'] = MEAL_CHOICES
+        return context
+
+    def get_queryset(self):
+        # Ottieni i parametri GET
+        order_field = self.request.GET.get('order_field')
+        filter_name = self.request.GET.get('filter_name', None)
+        filter_max_booking = self.request.GET.get('filter_max_booking', None)
+        cuisine_type = self.request.GET.get('filter_cuisine_type', None)
+        meal_type = self.request.GET.get('filter_meal_type', None)
+
+        queryset = Restaurant.objects.all()
+
+        # Applica i filtri
+        if filter_name:
+            queryset = queryset.filter(name__icontains=filter_name)
+        if filter_max_booking:
+            queryset = queryset.filter(max_booking__lte=filter_max_booking)
+        if cuisine_type:
+            # essendo lista di stringhe uso__icontains ez
+            queryset = queryset.filter(cuisine_type__icontains=cuisine_type)
+        if meal_type:
+            # essendo lista di stringhe uso__icontains ez
+            queryset = queryset.filter(meal_type__icontains=meal_type)
+
+        # Ordinamento
+        if order_field in [field.name for field in Restaurant._meta.fields]:
+            queryset = queryset.order_by(order_field)
+
+        return queryset
+
 
 class RestaurantDetailView(DetailView):
     model = Restaurant
