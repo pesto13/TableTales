@@ -12,12 +12,19 @@
 
   {% include 'restaurantsApp/searchbar.html' %}
 
-  {% for r in restaurants %}
-    {% include "restaurantsApp/single-restaurant.html" %}
-  {% empty %}
-    <p> Non ci sono ristoranti ancora</p>
-  {% endfor %}
+
+  <div class="row">
 
 
+      {% for r in restaurants %}
+
+        {% include "restaurantsApp/single-restaurant.html" %}
+
+
+      {% empty %}
+        <p> Non ci sono ristoranti ancora</p>
+      {% endfor %}
+
+  </div>
 
 {% endblock %}

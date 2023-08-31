@@ -1,19 +1,32 @@
-<form method="get">
-    <input type="text" name="order_field" placeholder="Campo di ordinamento">
-
-    <input type="text" name="filter_name" placeholder="Filtro per Nome">
-    <input type="number" name="filter_max_booking" placeholder="Quanto grande il ristorante">
-    <select name="filter_cuisine_type">
+<form method="get" class="mb-4">
+  <div class="row g-3">
+    <div class="col-md-3">
+      <input type="text" name="order_field" class="form-control" placeholder="Campo di ordinamento">
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="filter_name" class="form-control" placeholder="Filtro per Nome">
+    </div>
+    <div class="col-md-3">
+      <input type="number" name="filter_max_booking" class="form-control" placeholder="Quanto grande il ristorante">
+    </div>
+    <div class="col-md-3">
+      <select name="filter_cuisine_type" class="form-select">
         <option value="">Seleziona un tipo di cucina</option>
         {% for value, label in CUISINE_CHOICES %}
-            <option value="{{ value }}">{{ label }}</option>
+          <option value="{{ value }}">{{ label }}</option>
         {% endfor %}
-    </select>
-    <select name="filter_meal_type">
+      </select>
+    </div>
+    <div class="col-md-3">
+      <select name="filter_meal_type" class="form-select">
         <option value="">Seleziona un tipo</option>
         {% for value, label in MEAL_CHOICES %}
-            <option value="{{ value }}">{{ label }}</option>
+          <option value="{{ value }}">{{ label }}</option>
         {% endfor %}
-    </select>
-    <button type="submit">Applica</button>
-  </form>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <button type="submit" class="btn btn-primary">Applica</button>
+    </div>
+  </div>
+</form>

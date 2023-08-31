@@ -9,28 +9,31 @@
   {% bootstrap_css %}
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   {% bootstrap_javascript %}
-
   {% block scripts %}{% endblock %}
 </head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Metatags, title, CSS links, etc. -->
+</head>
 <body>
-  <header>
-    <h1>{% block header %}{% endblock %}</h1>
-    <nav>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/restaurants/">Restaurants</a></li>
-        <li><a href="/about/">About</a></li>
-        {% include "accounts/account_display.html" %}
-      </ul>
-    </nav>
-  </header>
+  <div class="container">
 
-  <main>
-    {% block content %}{% endblock %}
-  </main>
+    <header class="mb-4">
+      {% include 'navbar.html' %}
+      <h1>{% block header %}{% endblock %}</h1>
+    </header>
 
-  <footer>
-    <p>&copy; {{ year }} Francesco Bellodi. Tutti i diritti riservati.</p>
-  </footer>
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="mt-4">
+      <p>&copy; {{ year }} Francesco Bellodi. Tutti i diritti riservati.</p>
+    </footer>
+
+  </div>
 </body>
+</html>
+
 </html>
