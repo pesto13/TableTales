@@ -13,7 +13,7 @@ urlpatterns = [
     path("<int:pk>/delete/", RestaurantDeleteView.as_view(), name='restaurant_delete'),
     path("<int:pk>/update/", RestaurantUpdateView.as_view(), name='restaurant_update'),
     path("own-restaurants/", RestaurantOwnerListView.as_view(), name='user_restaurants'),
-    path("<int:pk>/photo/", PhotoCreateView.as_view(), name='photo_create'),
+    # path("<int:pk>/photo/", PhotoCreateView.as_view(), name='photo_create'),
 
 
 ]

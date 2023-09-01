@@ -6,24 +6,24 @@ from .forms import RestaurantCreateForm, PhotoUploadForm
 from .models import Restaurant, Photo
 
 
-class RestaurantCreateView(LoginRequiredMixin, CreateView):
-    form_class = RestaurantCreateForm
-    template_name = "form-submit.html"
-
-    def get_initial(self):
-        initial = super().get_initial()
-        initial['owner'] = self.request.user
-        return initial
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title_page'] = 'Aggiungi il tuo ristorante'
-        return context
-
-    def get_success_url(self):
-        # TODO mi sarebbe piaciuto aprire la detailview appena creata
-        success_url = reverse_lazy("home")
-        return success_url
+# class RestaurantCreateView(LoginRequiredMixin, CreateView):
+#     form_class = RestaurantCreateForm
+#     template_name = "form-submit.html"
+#
+#     def get_initial(self):
+#         initial = super().get_initial()
+#         initial['owner'] = self.request.user
+#         return initial
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['title_page'] = 'Aggiungi il tuo ristorante'
+#         return context
+#
+#     def get_success_url(self):
+#         # TODO mi sarebbe piaciuto aprire la detailview appena creata
+#         success_url = reverse_lazy("home")
+#         return success_url
 
 
 class RestaurantOwnerListView(LoginRequiredMixin, ListView):
@@ -108,6 +108,7 @@ class RestaurantUpdateView(OwnerAccessMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         context['title_page'] = "Modifica il tuo ristorante"
         return context
+
     def get_queryset(self):
         pk = self.kwargs.get('pk')
         return Restaurant.objects.filter(restaurantID=pk)
@@ -126,15 +127,39 @@ class RestaurantUpdateView(OwnerAccessMixin, UpdateView):
 
 
 #TODO manca il css
-class PhotoCreateView(OwnerAccessMixin, CreateView):
-    model = Photo
-    form_class = PhotoUploadForm
-    success_url = reverse_lazy('user_restaurants')
-    template_name = 'restaurantsApp/restaurant-add-photo.html'
+# class PhotoCreateView(OwnerAccessMixin, CreateView):
+#     model = Photo
+#     form_class = PhotoUploadForm
+#     success_url = reverse_lazy('user_restaurants')
+#     template_name = 'restaurantsApp/restaurant-add-photo.html'
+#
+#     def get_initial(self):
+#         initial = super().get_initial()
+#         restaurant_id = self.kwargs.get('pk')
+#         restaurant = Restaurant.objects.get(pk=restaurant_id)
+#         initial['restaurant'] = restaurant
+#         return initial
 
-    def get_initial(self):
-        initial = super().get_initial()
-        restaurant_id = self.kwargs.get('pk')
-        restaurant = Restaurant.objects.get(pk=restaurant_id)
-        initial['restaurant'] = restaurant
-        return initial
+class RestaurantCreateView(LoginRequiredMixin, CreateView):
+    model = Restaurant
+    form_class = RestaurantCreateForm
+    template_name = 'restaurantsApp/restaurant-form.html'
+    success_url = reverse_lazy('success_page')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['photo_form'] = PhotoUploadForm()
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        photo_form = context['photo_form']
+
+        if photo_form.is_valid():
+            restaurant = form.save()
+            photo = photo_form.save(commit=False)
+            photo.restaurant = restaurant
+            photo.save()
+            return super().form_valid(form)
+        else:
+            return self.render_to_response(self.get_context_data(form=form))

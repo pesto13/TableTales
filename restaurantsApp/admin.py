@@ -8,6 +8,7 @@ from .models import Restaurant, Photo
 class RestaurantAdmin(admin.ModelAdmin):
     pass
 
+
 @admin.register(Photo)
 class PhotoAdmin(admin.ModelAdmin):
     pass
