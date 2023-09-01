@@ -1,13 +1,14 @@
 {% extends "base.html" %}
-
+{% load django_bootstrap5 %}
 {% block title %}Login - {{ block.super }}{% endblock %}
 
 {% block header %}Effettua il Login{% endblock %}
 
 {% block content %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
+  <form method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button type="submit" class="btn btn-primary">Invia</button>
+    <button type="reset" class="btn btn-outline-danger">Annulla</button>
+  </form>
 {% endblock %}
