@@ -16,7 +16,12 @@ from .models import Reservation
 class ReservationCreateView(LoginRequiredMixin, CreateView):
     form_class = ReservationForm
     # fields = ['restaurant', 'username', 'reservation_date', 'entry_date', 'status']
-    template_name = 'reservation_form.html'  # Modifica con il percorso corretto al tuo template
+    template_name = 'form-submit.html'  # Modifica con il percorso corretto al tuo template
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title_page'] = "Inserisci la tua prenotazione"
+        return context
 
     def get_success_url(self):
         # Ottieni la chiave primaria (pk) del ristorante dalla richiesta

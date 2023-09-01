@@ -12,7 +12,12 @@ from .models import Review
 
 class ReviewCreateView(LoginRequiredMixin, CreateView):
     form_class = ReviewForm
-    template_name = 'review_form.html'
+    template_name = 'form-submit.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title_page'] = "Lascia una recensione"
+        return context
 
     def get_initial(self):
         initial = super().get_initial()

@@ -1,20 +1,19 @@
-{% load bootstrap5 %}
+{% load django_bootstrap5 %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}TableTales{% endblock %}</title>
+  <title>TableTales</title>
+
   {% block css %}{% endblock %}
   {% bootstrap_css %}
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   {% bootstrap_javascript %}
+
   {% block scripts %}{% endblock %}
-</head>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <!-- Metatags, title, CSS links, etc. -->
+
 </head>
 <body>
   <div class="container">
@@ -24,7 +23,7 @@
       <h1>{% block header %}{% endblock %}</h1>
     </header>
 
-    <main>
+    <main class="my-4">
       {% block content %}{% endblock %}
     </main>
 
@@ -34,6 +33,4 @@
 
   </div>
 </body>
-</html>
-
 </html>

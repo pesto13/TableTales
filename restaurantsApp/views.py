@@ -8,12 +8,17 @@ from .models import Restaurant, Photo
 
 class RestaurantCreateView(LoginRequiredMixin, CreateView):
     form_class = RestaurantCreateForm
-    template_name = "restaurantsApp/restaurant_create.html"
+    template_name = "form-submit.html"
 
     def get_initial(self):
         initial = super().get_initial()
         initial['owner'] = self.request.user
         return initial
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title_page'] = 'Aggiungi il tuo ristorante'
+        return context
 
     def get_success_url(self):
         # TODO mi sarebbe piaciuto aprire la detailview appena creata
@@ -97,12 +102,17 @@ class RestaurantUpdateView(OwnerAccessMixin, UpdateView):
     form_class = RestaurantCreateForm
     success_url = reverse_lazy('user_restaurants')
     # fields = ['name', 'address', 'phone_number', 'cuisine_type','meal_type']
-    template_name = 'restaurantsApp/restaurant_create.html'
+    template_name = 'form-submit.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title_page'] = "Modifica il tuo ristorante"
 
     def get_queryset(self):
         pk = self.kwargs.get('pk')
         return Restaurant.objects.filter(restaurantID=pk)
 
+    #FIXME sembrerebbe che io l'abbia rotto :D
     def get_initial(self):
         from .forms import CUISINE_CHOICES, MEAL_CHOICES
 
@@ -114,7 +124,7 @@ class RestaurantUpdateView(OwnerAccessMixin, UpdateView):
 
         return initial
 
-
+#TODO manca il css
 class PhotoCreateView(OwnerAccessMixin, CreateView):
     model = Photo
     form_class = PhotoUploadForm

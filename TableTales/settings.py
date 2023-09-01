@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'reviewsApp',
     'reservationsApp',
 
-    'bootstrap5',
+    'django_bootstrap5',
     'bootstrap_datepicker_plus',
     'phonenumber_field',
 
