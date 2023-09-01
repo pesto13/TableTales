@@ -107,7 +107,7 @@ class RestaurantUpdateView(OwnerAccessMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title_page'] = "Modifica il tuo ristorante"
-
+        return context
     def get_queryset(self):
         pk = self.kwargs.get('pk')
         return Restaurant.objects.filter(restaurantID=pk)
