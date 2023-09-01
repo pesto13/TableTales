@@ -124,6 +124,7 @@ class RestaurantUpdateView(OwnerAccessMixin, UpdateView):
 
         return initial
 
+
 #TODO manca il css
 class PhotoCreateView(OwnerAccessMixin, CreateView):
     model = Photo
