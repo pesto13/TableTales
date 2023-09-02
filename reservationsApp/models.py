@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.template.defaultfilters import linebreaksbr
 
 from restaurantsApp.models import Restaurant
 
@@ -21,3 +22,11 @@ class Reservation(models.Model):
 
     def __str__(self):
         return f"Reservation for {self.restaurant.name} by {self.username} with {self.how_many} people"
+
+    def str_for_logged_user(self):
+        return linebreaksbr(
+            f"Prenotazione per {self.restaurant} "
+            f"in data {self.reservation_date.date()} alle {self.reservation_date.time()}"
+            f"\n Numero di persone: {self.how_many}"
+            f"\n Stato: {self.status}"
+        )

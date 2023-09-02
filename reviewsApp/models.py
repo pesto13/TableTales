@@ -2,6 +2,9 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 from django.conf import settings
+from django.template.defaultfilters import linebreaksbr
+
+
 # from restaurantsApp.models import Restaurant
 
 # Create your models here.
@@ -13,11 +16,14 @@ class Review(models.Model):
     comment_title = models.CharField(max_length=255)
     comment = models.TextField()
     rating = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
-    # cleanliness_rating = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
-    # value_price_rating = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
-    # service_rating = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
-    # ambiance_rating = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     review_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Review for {self.restaurant} by {self.username}"
+
+    def str_for_logged_user(self):
+        return linebreaksbr(
+            f"Recensione per {self.restaurant} in data {self.review_date.date()}"
+            f"\n Valutazione: {self.rating}"
+            f"\n Commento: {self.comment}"
+        )

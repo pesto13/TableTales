@@ -2,52 +2,63 @@
 
 {% block content %}
 <div class="container">
-    <h1>Restaurant Details</h1>
+  <h1>Restaurant Details</h1>
 
-    <!-- Restaurant Information -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h2>{{ restaurant.name }}</h2>
-        </div>
-        <div class="card-body">
-            <p><strong>Owner:</strong> {{ restaurant.owner.username }}</p>
-            <p><strong>Address:</strong> {{ restaurant.address }}</p>
-            <p><strong>Phone Number:</strong> {{ restaurant.phone_number }}</p>
-            <p><strong>Cuisine Type:</strong> {{ restaurant.cuisine_type }}</p>
-            <p><strong>Meal Type:</strong> {{ restaurant.meal_type }}</p>
-            <p><strong>Max Booking:</strong> {{ restaurant.max_booking }}</p>
-
-            {% for meal_type in restaurant.meal_type_as_list %}
-                <p><strong>Meal Type:</strong> {{ meal_type }}</p>
-            {% endfor %}
-
-            <div class="rating">
-            {% for i in "12345" %}
-              <span class="fa-stack">
-                {% if i >= r.average_rating|floatformat %}
-                  <i class="far fa-star fa-stack-1x"></i>
-                {% else %}
-                  <i class="fas fa-star fa-stack-1x"></i>
-                {% endif %}
-              </span>
-            {% endfor %}
-            </div>
-        </div>
+  <!-- Restaurant Information -->
+  <div class="card mb-4">
+    <div class="card-header">
+      <h2>{{ restaurant.name }}</h2>
     </div>
+    <div class="card-body">
+      <p><strong>Proprietario:</strong> {{ restaurant.owner.username }}</p>
+      <p><strong>Indirizzo:</strong> {{ restaurant.address }}</p>
+      <p><strong>Numero di telefono:</strong> {{ restaurant.phone_number }}</p>
 
-    <!-- Restaurant Photos -->
-    <h2>Restaurant Photos</h2>
-    <div class="row">
-        {% for photo in restaurant.photo_set.all %}
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <img src="{{ photo.image.url }}" class="card-img-top" alt="{{ photo.photo_comment }}">
-                    <div class="card-body">
-                        <p>{{ photo.photo_comment }}</p>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
+
+      <p><strong>Posti massimi:</strong> {{ restaurant.max_booking }}</p>
+
+      <p><strong>Tipo di pasto:</strong></p>
+      <ul class="list-group mb-4">
+      {% for meal_type in restaurant.meal_type_as_list %}
+        <li class="list-group-item">{{ meal_type }}</li>
+      {% endfor %}
+      </ul>
+
+      <p><strong>Tipo di cucina:</strong></p>
+      <ul class="list-group mb-4">
+      {% for cuisine_type in restaurant.cuisine_type_as_list %}
+        <li class="list-group-item">{{ cuisine_type }}</li>
+      {% endfor %}
+      </ul>
+
+
+      <div class="rating">
+      {% for i in "12345" %}
+        <span class="fa-stack">
+          {% if i >= r.average_rating|floatformat %}
+            <i class="far fa-star fa-stack-1x"></i>
+          {% else %}
+            <i class="fas fa-star fa-stack-1x"></i>
+          {% endif %}
+        </span>
+      {% endfor %}
+      </div>
     </div>
+  </div>
+
+  <!-- Restaurant Photos -->
+  <h2>Restaurant Photos</h2>
+  <div class="row">
+      {% for photo in restaurant.photo_set.all %}
+          <div class="col-md-4">
+              <div class="card mb-4">
+                  <img src="{{ photo.image.url }}" class="card-img-top" alt="{{ photo.photo_comment }}">
+                  <div class="card-body">
+                      <p>{{ photo.photo_comment }}</p>
+                  </div>
+              </div>
+          </div>
+      {% endfor %}
+  </div>
 </div>
 {% endblock %}
