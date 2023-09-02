@@ -92,7 +92,7 @@ class RestaurantListView(ListView):
 
 class RestaurantDetailView(DetailView):
     model = Restaurant
-    template_name = 'restaurantsApp/restaurant_detail.html'  # Specifica il percorso al tuo template
+    template_name = 'restaurantsApp/restaurant-detail-v2.html'  # Specifica il percorso al tuo template
     context_object_name = 'restaurant'  # Nome del contesto da utilizzare nel template
 
 

@@ -28,6 +28,9 @@ class Restaurant(models.Model):
             return round(media, 2)  # Arrotonda la media a due decimali
         return 0  # Nessuna recensione
 
+    def meal_type_as_list(self):
+        return self.meal_type.split(sep=',')
+
 
 class Photo(models.Model):
     photoID = models.IntegerField(primary_key=True)
