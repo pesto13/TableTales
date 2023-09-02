@@ -45,6 +45,6 @@ class PhotoUploadForm(forms.ModelForm):
 
     class Meta:
         model = Photo
-        fields = ['restaurant', 'image', 'photo_comment']
+        fields = ['image', 'photo_comment']
 
-    restaurant = forms.ModelChoiceField(queryset=Restaurant.objects.all(), widget=forms.HiddenInput())
+    # restaurant = forms.ModelChoiceField(queryset=Restaurant.objects.all(), widget=forms.HiddenInput())
