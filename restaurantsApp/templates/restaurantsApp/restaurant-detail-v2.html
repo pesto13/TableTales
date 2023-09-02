@@ -33,15 +33,7 @@
 
 
             <div class="rating">
-              {% for i in "12345" %}
-                <span class="fa-stack">
-          {% if i >= r.average_rating|floatformat %}
-            <i class="far fa-star fa-stack-1x"></i>
-          {% else %}
-            <i class="fas fa-star fa-stack-1x"></i>
-          {% endif %}
-        </span>
-              {% endfor %}
+              {% include 'stars.html' %}
             </div>
           </div>
         </div>
@@ -55,7 +47,8 @@
           <div class="card-body d-flex align-items-center">
             <div class="d-grid gap-3 col-8 mx-auto ">
               <a href="{% url 'reservation_create' restaurant.pk %}" class="btn btn-lg btn-primary">Prenota</a>
-              <a href="{% url 'review_create' restaurant.pk %}" class="btn btn-lg btn-secondary">Lascia una recensione</a>
+              <a href="{% url 'review_create' restaurant.pk %}" class="btn btn-lg btn-secondary">Lascia una
+                recensione</a>
             </div>
           </div>
         </div>
@@ -65,7 +58,7 @@
 
     <!-- Restaurant Photos -->
     <h2>Restaurant Photos</h2>
-    <div class="row">
+    <div class="row mb-4">
       {% for photo in restaurant.photo_set.all|slice:":3" %}
         <div class="col-md-4">
           <div class="card mb-4 h-100">
@@ -76,6 +69,33 @@
           </div>
         </div>
       {% endfor %}
+    </div>
+
+    <h2>Recensioni dei clienti</h2>
+    <div class="row">
+      <div class="col-8">
+        <div class="card">
+
+          <div class="row">
+            <div class="col-8">
+              <ul class="list-group">
+                {% for review in restaurant.review_set.all %}
+                  <li class="list-group-item">
+                    <p><strong>{{ review.comment_title }}</strong></p>
+                    <p>{{ review.comment }}</p>
+                  </li>
+                  <p>stella</p>
+                {% endfor %}
+              </ul>
+            </div>
+            <div class="col-4">
+
+            </div>
+          </div>
+        </div>
+
+
+      </div>
     </div>
   </div>
 {% endblock %}

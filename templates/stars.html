@@ -1,0 +1,9 @@
+{% for i in "12345" %}
+  <span class="fa-stack">
+    {% if i >= r.average_rating|floatformat %}
+      <i class="far fa-star fa-stack-1x"></i>
+    {% else %}
+      <i class="fas fa-star fa-stack-1x"></i>
+    {% endif %}
+  </span>
+{% endfor %}
