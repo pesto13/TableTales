@@ -1,9 +1,17 @@
+{% load static%}
 <div class="col-md-4 mb-4">
   <div class="card">
     <div class="card-body">
       <a href="{% url 'restaurant_detail' r.pk %}">
         <h5 class="card-title">{{ r.name }}</h5>
       </a>
+
+      {# Immagine del ristorante o immagine di default #}
+      {% if r.photo_set.exists %}
+        <img src="{{ r.photo_set.first.image.url }}" alt="{{ r.name }} Image " width="320" height="180">
+      {% else %}
+        <img src=" {% static 'images/no_image_to_show.jpg' %}" alt="Immagine mancante" width="320" height="180">
+      {% endif %}
 
       {# per il rating #}
       <div class="rating">

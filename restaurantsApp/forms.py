@@ -28,7 +28,7 @@ class RestaurantCreateForm(forms.ModelForm):
 
     class Meta:
         model = Restaurant
-        fields = ['owner', 'name', 'address', 'phone_number', 'cuisine_type', 'meal_type']
+        fields = ['owner', 'name', 'address', 'phone_number', 'max_booking', 'cuisine_type', 'meal_type']
 
     cuisine_type = forms.MultipleChoiceField(
         choices=CUISINE_CHOICES,
@@ -45,6 +45,6 @@ class PhotoUploadForm(forms.ModelForm):
 
     class Meta:
         model = Photo
-        fields = ['image', 'photo_comment']
+        fields = ['restaurant', 'image', 'photo_comment']
 
-    # restaurant = forms.ModelChoiceField(queryset=Restaurant.objects.all(), widget=forms.HiddenInput())
+    restaurant = forms.ModelChoiceField(queryset=Restaurant.objects.all(), widget=forms.HiddenInput())

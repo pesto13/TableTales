@@ -1,4 +1,5 @@
 from django.forms import inlineformset_factory
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import View
@@ -128,20 +129,27 @@ class RestaurantUpdateView(OwnerAccessMixin, UpdateView):
         return initial
 
 
-
 #TODO manca il css
 class PhotoCreateView(OwnerAccessMixin, CreateView):
-    model = Photo
+    # model = Photo
     form_class = PhotoUploadForm
     success_url = reverse_lazy('user_restaurants')
-    template_name = 'restaurantsApp/restaurant-add-photo.html'
+    template_name = 'form-submit.html'
 
     def get_initial(self):
         initial = super().get_initial()
         restaurant_id = self.kwargs.get('pk')
-        restaurant = Restaurant.objects.get(pk=restaurant_id)
-        initial['restaurant'] = restaurant
+        try:
+            restaurant = Restaurant.objects.get(pk=restaurant_id)
+            initial['restaurant'] = restaurant
+        except Restaurant.DoesNotExist:
+            raise Http404("Il ristorante specificato non esiste.")
         return initial
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title_page'] = "Aggiungi una foto"
+        return context
 
 # class RestaurantCreateView(LoginRequiredMixin, CreateView):
 #     model = Restaurant
