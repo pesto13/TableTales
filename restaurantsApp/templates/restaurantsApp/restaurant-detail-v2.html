@@ -77,20 +77,38 @@
         <div class="card">
 
           <div class="row">
-            <div class="col-8">
-              <ul class="list-group">
-                {% for review in restaurant.review_set.all %}
-                  <li class="list-group-item">
-                    <p><strong>{{ review.comment_title }}</strong></p>
-                    <p>{{ review.comment }}</p>
-                  </li>
-                  <p>stella</p>
-                {% endfor %}
-              </ul>
-            </div>
-            <div class="col-4">
 
-            </div>
+              <ul class="list-group">
+
+                {% for review in restaurant.review_set.all %}
+
+                  <li class="list-group-item">
+                    <div class="d-flex align-items-center">
+
+                      <div>
+                        <p><strong>{{ review.comment_title }}</strong></p>
+                        <p>{{ review.comment }}</p>
+                      </div>
+
+                      <div class="ms-auto" style="min-width: 200px;">
+                        {% for i in "12345" %}
+                          <span class="fa-stack">
+                            {% if i >= review.rating %}
+                              <i class="far fa-star"></i>
+                            {% else %}
+                              <i class="fas fa-star"></i>
+                            {% endif %}
+                          </span>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </li>
+
+
+                {% endfor %}
+
+              </ul>
+
           </div>
         </div>
 
