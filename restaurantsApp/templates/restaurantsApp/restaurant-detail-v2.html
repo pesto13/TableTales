@@ -83,14 +83,14 @@
                 {% for review in restaurant.review_set.all %}
 
                   <li class="list-group-item">
-                    <div class="d-flex align-items-center">
+                    <div class="row">
 
-                      <div>
+                      <div class="col-8">
                         <p><strong>{{ review.comment_title }}</strong></p>
                         <p>{{ review.comment }}</p>
                       </div>
 
-                      <div class="ms-auto" style="min-width: 200px;">
+                      <div class="col-4 my-auto">
                         {% for i in "12345" %}
                           <span class="fa-stack">
                             {% if i >= review.rating %}
