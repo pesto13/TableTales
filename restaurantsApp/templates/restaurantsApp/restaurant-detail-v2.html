@@ -33,7 +33,15 @@
 
 
             <div class="rating">
-              {% include 'stars.html' %}
+              {% for i in "12345" %}
+                <span class="fa-stack">
+                  {% if i >= restaurant.average_rating|floatformat %}
+                    <i class="far fa-star fa-stack-1x"></i>
+                  {% else %}
+                    <i class="fas fa-star fa-stack-1x"></i>
+                  {% endif %}
+                </span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -78,36 +86,37 @@
 
           <div class="row">
 
-              <ul class="list-group">
+            <ul class="list-group">
 
-                {% for review in restaurant.review_set.all %}
+              {% for review in restaurant.review_set.all %}
 
-                  <li class="list-group-item">
-                    <div class="row">
+                <li class="list-group-item">
+                  <div class="row">
 
-                      <div class="col-8">
-                        <p><strong>{{ review.comment_title }}</strong></p>
-                        <p>{{ review.comment }}</p>
-                      </div>
-
-                      <div class="col-4 my-auto">
-                        {% for i in "12345" %}
-                          <span class="fa-stack">
-                            {% if i >= review.rating %}
-                              <i class="far fa-star"></i>
-                            {% else %}
-                              <i class="fas fa-star"></i>
-                            {% endif %}
-                          </span>
-                        {% endfor %}
-                      </div>
+                    <div class="col-8">
+                      <p><strong>{{ review.comment_title }}</strong></p>
+                      <p>{{ review.comment }}</p>
                     </div>
-                  </li>
+
+                    <div class="col-4 my-auto">
+                      {% for i in "12345" %}
+                        <span class="fa-stack">
+                            {# FIXME #}
+                          {% if i > review.rating|floatformat %}
+                            <i class="far fa-star fa-stack-1x"></i>
+                          {% else %}
+                            <i class="fas fa-star fa-stack-1x"></i>
+                          {% endif %}
+                          </span>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </li>
 
 
-                {% endfor %}
+              {% endfor %}
 
-              </ul>
+            </ul>
 
           </div>
         </div>

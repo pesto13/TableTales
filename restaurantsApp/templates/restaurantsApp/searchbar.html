@@ -1,13 +1,21 @@
 <form method="get" class="mb-4">
   <div class="row g-3">
     <div class="col-md-3">
-      <input type="text" name="order_field" class="form-control" placeholder="Campo di ordinamento">
+{#      <input type="text" name="order_field" class="form-control" placeholder="Campo di ordinamento">#}
+      <select name="order_field" class="form-select">
+        <option value="">Seleziona il campo di ordinamento</option>
+        <option value="name">Nome ristorante</option>
+        <option value="average_rating">Numero di stelle</option>
+      </select>
     </div>
     <div class="col-md-3">
       <input type="text" name="filter_name" class="form-control" placeholder="Filtro per Nome">
     </div>
     <div class="col-md-3">
       <input type="number" name="filter_max_booking" class="form-control" placeholder="Quanto grande il ristorante">
+    </div>
+    <div class="col-md-3">
+      <input type="number" name="filter_average_rating" class="form-control" placeholder="Quante stelle cerchi?" min="1" max="5">
     </div>
     <div class="col-md-3">
       <select name="filter_cuisine_type" class="form-select">
@@ -19,7 +27,7 @@
     </div>
     <div class="col-md-3">
       <select name="filter_meal_type" class="form-select">
-        <option value="">Seleziona un tipo</option>
+        <option value="">Seleziona un tipo di pasto</option>
         {% for value, label in MEAL_CHOICES %}
           <option value="{{ value }}">{{ label }}</option>
         {% endfor %}

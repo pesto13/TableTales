@@ -3,7 +3,7 @@
   <div class="card">
     <div class="card-body">
       <a href="{% url 'restaurant_detail' r.pk %}">
-        <h5 class="card-title">{{ r.name }}</h5>
+        <h5 class="card-title">{{ r.name|capfirst }}</h5>
       </a>
 
       {# Immagine del ristorante o immagine di default #}
@@ -14,7 +14,7 @@
       {% endif %}
 
       {# per il rating #}
-      <div class="rating">
+      <div class="rating mt-3">
         {% for i in "12345" %}
           <span class="fa-stack">
             {% if i >= r.average_rating|floatformat %}

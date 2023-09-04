@@ -2,14 +2,19 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-  <h2 class="my-4">{{ title_page }}</h2>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
 
-    {% bootstrap_form form %}
+  <div class="container">
+    <div class="col-6 mx-auto">
+    <h2 class="my-4">{{ title_page }}</h2>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.media }}
+      {% bootstrap_form form %}
 
-    <button type="submit" class="btn btn-primary">Invia</button>
-    <button type="reset" class="btn btn-outline-danger">Annulla</button>
+      <button type="submit" class="btn btn-primary">Invia</button>
+      <button type="reset" class="btn btn-outline-danger">Annulla</button>
 
-  </form>
+    </form>
+</div>
+  </div>
 {% endblock %}

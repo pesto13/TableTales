@@ -66,6 +66,7 @@ class RestaurantListView(ListView):
         order_field = self.request.GET.get('order_field')
         filter_name = self.request.GET.get('filter_name', None)
         filter_max_booking = self.request.GET.get('filter_max_booking', None)
+        filter_average_rating = self.request.GET.get('filter_average_rating', None)
         cuisine_type = self.request.GET.get('filter_cuisine_type', None)
         meal_type = self.request.GET.get('filter_meal_type', None)
 
@@ -76,6 +77,9 @@ class RestaurantListView(ListView):
             queryset = queryset.filter(name__icontains=filter_name)
         if filter_max_booking:
             queryset = queryset.filter(max_booking__lte=filter_max_booking)
+        if filter_average_rating:
+            queryset = queryset.filter(average_rating__lte=int(filter_average_rating)+1)
+            queryset = queryset.filter(average_rating__gt=int(filter_average_rating))
         if cuisine_type:
             # essendo lista di stringhe uso__icontains ez
             queryset = queryset.filter(cuisine_type__icontains=cuisine_type)
@@ -84,6 +88,10 @@ class RestaurantListView(ListView):
             queryset = queryset.filter(meal_type__icontains=meal_type)
 
         # Ordinamento
+
+        if order_field == "average_rating":
+            return queryset.order_by("average_rating").reverse()
+
         if order_field in [field.name for field in Restaurant._meta.fields]:
             queryset = queryset.order_by(order_field)
 
@@ -116,7 +124,6 @@ class RestaurantUpdateView(OwnerAccessMixin, UpdateView):
         pk = self.kwargs.get('pk')
         return Restaurant.objects.filter(restaurantID=pk)
 
-    #FIXME sembrerebbe che io l'abbia rotto :D
     def get_initial(self):
         from .forms import CUISINE_CHOICES, MEAL_CHOICES
 
