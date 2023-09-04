@@ -1,13 +1,11 @@
-from django.forms import inlineformset_factory
 from django.http import Http404
-from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
-from django.views import View
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
 
+from accounts.User_Reccomandations import UserRecommendations
 from mixins.user_mixins import LoginRequiredMixin, OwnerAccessMixin
 from .forms import RestaurantCreateForm, PhotoUploadForm
-from .models import Restaurant, Photo
+from .models import Restaurant
 
 
 class RestaurantCreateView(LoginRequiredMixin, CreateView):
@@ -103,6 +101,21 @@ class RestaurantDetailView(DetailView):
     template_name = 'restaurantsApp/restaurant-detail-v2.html'  # Specifica il percorso al tuo template
     context_object_name = 'restaurant'  # Nome del contesto da utilizzare nel template
 
+    # def _get_recommended_restaurants(self):
+    #     user = self.request.user
+    #     user_reviews = Review.objects.all().filter(username=user)
+    #     user_reservations = Reservation.objects.all().filter(username=user)
+    #
+    #     return rest
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #
+    #     if self.request.user.is_authenticated:
+    #         ur = UserRecommendations(self.request.user)
+    #         context['recommended_restaurants'] = ur.calculate_coefficients()
+    #     return context
+
 
 class RestaurantDeleteView(OwnerAccessMixin, DeleteView):
     model = Restaurant
@@ -191,4 +204,10 @@ class PhotoCreateView(OwnerAccessMixin, CreateView):
 #         context['photo_form'] = PhotoUploadForm
 #
 #         return context
+
+
+
+
+
+
 
