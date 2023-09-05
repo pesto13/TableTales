@@ -1,13 +1,16 @@
+import datetime
+from datetime import timedelta, datetime
+
 from django.db import models
 from django.conf import settings
-from django.template.defaultfilters import linebreaksbr
+from django.db.models import Sum
+
 from phonenumber_field.modelfields import PhoneNumberField
 
 from restaurantsApp.RestaurantChoices import MEAL_CHOICES, CUISINE_CHOICES
 from reviewsApp.models import Review
 
 
-# TODO questa è una prima versione veloce, sistemare i tipi
 class Restaurant(models.Model):
     restaurantID = models.IntegerField(primary_key=True)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -46,6 +49,36 @@ class Restaurant(models.Model):
 
     def cuisine_list(self):
         return self._split_substrings(self.cuisine_type)
+
+    @staticmethod
+    def _generate_dates(chosen_date):
+        # TODO potrebbe essere un attributo
+        opening_hour = 10
+        closing_hour = 20
+        current_date = chosen_date.replace(hour=opening_hour, minute=0, second=0, microsecond=0)
+        end_time = chosen_date.replace(hour=closing_hour, minute=0, second=0, microsecond=0)
+
+        while current_date < end_time:
+            yield current_date
+            current_date += timedelta(hours=1)
+
+    def available_hours_list(self):
+        available_hours = dict()
+
+        today = datetime.now()
+        for actual_hour in self._generate_dates(today):
+            one_hour_before = actual_hour - timedelta(hours=1)
+            two_hours_after = actual_hour + timedelta(hours=2)
+
+            total_guests = self.reservation_set.all().filter(
+                reservation_date__gte=one_hour_before,
+                reservation_date__lt=two_hours_after,
+                status='confirmed'
+            ).aggregate(Sum('how_many'))["how_many__sum"]
+
+            available_hours[actual_hour.time()] = total_guests
+
+        return available_hours
 
 class Photo(models.Model):
     photoID = models.IntegerField(primary_key=True)

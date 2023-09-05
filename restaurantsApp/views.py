@@ -116,7 +116,8 @@ class RestaurantDetailView(DetailView):
             user = self.request.user
             ur = UserRecommendations(self.request.user, Review.objects.all().filter(username=user))
             ur.calculate_coefficients()
-            context['recommend_restaurant_list'] = ur.get_recommended_restaurants(Restaurant.objects.all())
+
+            context['recommend_restaurant_list'] = ur.get_recommended_restaurants(Restaurant.objects.all().exclude(restaurantID=self.object.restaurantID))
         return context
 
 

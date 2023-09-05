@@ -35,10 +35,10 @@
             <div class="rating">
               {% for i in "12345" %}
                 <span class="fa-stack">
-                  {% if i >= restaurant.average_rating|floatformat %}
-                    <i class="far fa-star fa-stack-1x"></i>
+                  {% if i <= restaurant.average_rating|floatformat %}
+                    <i class="fa-solid fa-star fa-stack-1x"></i>
                   {% else %}
-                    <i class="fas fa-star fa-stack-1x"></i>
+                    <i class="fa-regular fa-star fa-stack-1x"></i>
                   {% endif %}
                 </span>
               {% endfor %}
@@ -60,6 +60,18 @@
             </div>
           </div>
         </div>
+        <div class="card mt-3">
+          <div class="card-header">
+            <h2>Prenotazioni per oggi</h2>
+          </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-around">
+              <div class="col-4 btn">1</div>
+              <div class="col-4 btn">2</div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
     <!-- fine del div intero -->
@@ -88,7 +100,7 @@
 
             <ul class="list-group">
 
-              {% for review in restaurant.review_set.all %}
+              {% for review in restaurant.review_set.all|slice:":10" %}
 
                 <li class="list-group-item">
                   <div class="row">
@@ -101,7 +113,6 @@
                     <div class="col-4 my-auto">
                       {% for i in "12345" %}
                         <span class="fa-stack">
-                            {# FIXME #}
                           {% if i > review.rating|floatformat %}
                             <i class="far fa-star fa-stack-1x"></i>
                           {% else %}
@@ -123,6 +134,12 @@
 
 
       </div>
+    </div>
+    <div class="row mt-5">
+      <h2>Vedi Anche</h2>
+      {% for r in recommend_restaurant_list|slice:":3" %}
+        {% include "restaurantsApp/single-restaurant.html" %}
+      {% endfor %}
     </div>
   </div>
 {% endblock %}

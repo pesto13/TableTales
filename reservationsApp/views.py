@@ -1,4 +1,4 @@
-from datetime import datetime, time
+from datetime import datetime, time, timedelta
 
 from django.db.models import Sum
 from django.urls import reverse_lazy
@@ -49,16 +49,25 @@ class ReservationCreateView(LoginRequiredMixin, CreateView):
         restaurant = form.cleaned_data.get('restaurant')
         how_many = form.cleaned_data.get('how_many')
 
-        date = form.cleaned_data.get('reservation_date')
-        date = date.date()
-        start_time = make_aware(datetime.combine(date, time.min))
-        end_time = make_aware(datetime.combine(date, time.max))
+        reservation_date = form.cleaned_data.get('reservation_date')
 
-        #fixme le date andrebbero messe non sul giorno totale :D
+        # reservation_date_day = reservation_date.date()
+        # reservation_date_time = reservation_date.time()
+
+        # Calcola l'ora 1 prima della prenotazione
+        one_hour_before = reservation_date - timedelta(hours=1)
+
+        # Calcola l'ora 2 dopo la prenotazione
+        two_hours_after = reservation_date + timedelta(hours=2)
+
+        # start_time = make_aware(datetime.combine(reservation_date, time.min))
+        # end_time = make_aware(datetime.combine(reservation_date, time.max))
+
+        # fixme le reservation_date andrebbero messe non sul giorno totale :D
         total_guests = Reservation.objects.filter(
             restaurant=restaurant,
-            reservation_date__gte=start_time,
-            reservation_date__lt=end_time,
+            reservation_date__gte=one_hour_before,
+            reservation_date__lt=two_hours_after,
             status='confirmed'
         ).aggregate(Sum('how_many'))["how_many__sum"]
 
