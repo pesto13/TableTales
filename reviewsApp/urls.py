@@ -4,9 +4,9 @@ from .views import ReviewCreateView, ReviewListView, UserReviewsListView, Review
 
 urlpatterns = [
 
-    path('', ReviewListView.as_view(), name='review_list'),
+    # path('', ReviewListView.as_view(), name='review_list'),
     path('create/', ReviewCreateView.as_view(), name='review_create'),
-    path('<int:pk>/delete/', ReviewDeleteView.as_view(), name='review_delete'),
+    path('reviews/<int:pk>/delete/', ReviewDeleteView.as_view(), name='review_delete'),
 
     path('reviews/', UserReviewsListView.as_view(), name='user_reviews'),
 ]
