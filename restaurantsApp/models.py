@@ -80,6 +80,9 @@ class Restaurant(models.Model):
 
         return available_hours
 
+    def get_percentage_50(self):
+        return 50*self.max_booking/100
+
 class Photo(models.Model):
     photoID = models.IntegerField(primary_key=True)
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
