@@ -1,9 +1,10 @@
 from django.http import Http404
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
 
 from accounts.User_Reccomandations import UserRecommendations
 from mixins.user_mixins import LoginRequiredMixin, OwnerAccessMixin
+from reviewsApp.models import Review
 from .forms import RestaurantCreateForm, PhotoUploadForm
 from .models import Restaurant
 
@@ -108,13 +109,15 @@ class RestaurantDetailView(DetailView):
     #
     #     return rest
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #
-    #     if self.request.user.is_authenticated:
-    #         ur = UserRecommendations(self.request.user)
-    #         context['recommended_restaurants'] = ur.calculate_coefficients()
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        if self.request.user.is_authenticated:
+            user = self.request.user
+            ur = UserRecommendations(self.request.user, Review.objects.all().filter(username=user))
+            ur.calculate_coefficients()
+            context['recommend_restaurant_list'] = ur.get_recommended_restaurants(Restaurant.objects.all())
+        return context
 
 
 class RestaurantDeleteView(OwnerAccessMixin, DeleteView):
@@ -149,7 +152,6 @@ class RestaurantUpdateView(OwnerAccessMixin, UpdateView):
         return initial
 
 
-#TODO manca il css
 class PhotoCreateView(OwnerAccessMixin, CreateView):
     # model = Photo
     form_class = PhotoUploadForm
@@ -204,10 +206,3 @@ class PhotoCreateView(OwnerAccessMixin, CreateView):
 #         context['photo_form'] = PhotoUploadForm
 #
 #         return context
-
-
-
-
-
-
-

@@ -1,27 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
 
+from restaurantsApp.RestaurantChoices import CUISINE_CHOICES, MEAL_CHOICES
 from restaurantsApp.models import Restaurant, Photo
-
-CUISINE_CHOICES = (
-        ('italian', 'Italiana'),
-        ('japanese', 'Giapponese'),
-        ('indian', 'Indiana'),
-        ('mexican', 'Messicana'),
-        ('chinese', 'Cinese'),
-        ('seafood', 'Pesce'),
-        ('steakhouse', 'Steakhouse'),
-        ('barbecue', 'Barbecue'),
-        ('tigelle', 'Tigelle'),
-        ('pizza', 'Pizza'),
-    )
-
-MEAL_CHOICES = (
-        ('breakfast', 'Colazione'),
-        ('lunch', 'Pranzo'),
-        ('happy_hour', 'Aperitivo'),
-        ('dinner', 'Cena'),
-    )
 
 
 class RestaurantCreateForm(forms.ModelForm):

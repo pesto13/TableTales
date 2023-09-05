@@ -2,27 +2,9 @@ from django.db import models
 from django.conf import settings
 from django.template.defaultfilters import linebreaksbr
 from phonenumber_field.modelfields import PhoneNumberField
+
+from restaurantsApp.RestaurantChoices import MEAL_CHOICES, CUISINE_CHOICES
 from reviewsApp.models import Review
-
-CUISINE_CHOICES = (
-        ('italian', 'Italiana'),
-        ('japanese', 'Giapponese'),
-        ('indian', 'Indiana'),
-        ('mexican', 'Messicana'),
-        ('chinese', 'Cinese'),
-        ('seafood', 'Pesce'),
-        ('steakhouse', 'Steakhouse'),
-        ('barbecue', 'Barbecue'),
-        ('tigelle', 'Tigelle'),
-        ('pizza', 'Pizza'),
-    )
-
-MEAL_CHOICES = (
-        ('breakfast', 'Colazione'),
-        ('lunch', 'Pranzo'),
-        ('happy_hour', 'Aperitivo'),
-        ('dinner', 'Cena'),
-    )
 
 
 # TODO questa è una prima versione veloce, sistemare i tipi
@@ -62,6 +44,8 @@ class Restaurant(models.Model):
     def cuisine_type_as_list(self):
         return [c[1] for c in CUISINE_CHOICES if c[0] in self._split_substrings(self.cuisine_type)]
 
+    def cuisine_list(self):
+        return self._split_substrings(self.cuisine_type)
 
 class Photo(models.Model):
     photoID = models.IntegerField(primary_key=True)
