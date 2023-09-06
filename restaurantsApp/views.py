@@ -24,7 +24,6 @@ class RestaurantCreateView(LoginRequiredMixin, CreateView):
         return context
 
     def get_success_url(self):
-        # TODO mi sarebbe piaciuto aprire la detailview appena creata
         success_url = reverse_lazy("home")
         return success_url
 

@@ -12,7 +12,7 @@ class ReservationForm(forms.ModelForm):
         fields = ['restaurant', 'username', 'reservation_date', 'how_many', 'status']
         widgets = {
             'reservation_date': DateTimePickerInput(options={
-                "format": "DD/MM/YYYY hh:mm",
+                "format": "DD/MM/YYYY hh",
                 "showTodayButton": True,
                 # FIXME
                 # "autoclose": True,
