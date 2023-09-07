@@ -47,11 +47,6 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ReviewListView(ListView):
-    model = Review
-    template_name = 'review_list.html'  # Modifica con il percorso corretto al tuo template
-    context_object_name = 'reviews'  # Nome della variabile di contesto nel template
-
 
 class UserReviewsListView(LoginRequiredMixin, ListView):
     model = Review

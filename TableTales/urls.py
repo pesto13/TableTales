@@ -24,24 +24,24 @@ import restaurantsApp
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    #navbar
+    # navbar
     path("", TemplateView.as_view(template_name="home.html"), name="home"),
-    # path("home/", TemplateView.as_view(template_name="home.html"), name="home"),
     path("about/", TemplateView.as_view(template_name="about.html"), name="about"),
 
-    #accounts
+    # accounts
     path("accounts/", include("accounts.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
 
-    #restaurants
+    # restaurants
     path("restaurants/", include("restaurantsApp.urls")),
-    path("user/", include("restaurantsApp.urls")),
+    # path("user/", include("restaurantsApp.urls")),
 
-    #reviews
+    # reviews
+path("user/", include("reviewsApp.urls")),
     path("restaurants/<int:pk>/reviews/", include("reviewsApp.urls")),
-    path("user/", include("reviewsApp.urls")),
 
-    #reservations
+
+    # reservations
     path("restaurants/<int:pk>/reservations/", include("reservationsApp.urls")),
     path("user/", include("reservationsApp.urls")),
 ]

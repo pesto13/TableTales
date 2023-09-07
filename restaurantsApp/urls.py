@@ -5,7 +5,6 @@ from .views import *
 urlpatterns = [
 
     path("", RestaurantListView.as_view(), name="listRestaurants"),
-
     path('<int:pk>/', RestaurantDetailView.as_view(), name='restaurant_detail'),
 
     #per owner

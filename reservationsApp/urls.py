@@ -4,7 +4,8 @@ from .views import ReservationCreateView, UserReservationsView, ReservationDelet
 urlpatterns = [
     # Altre URL...
     path('create/', ReservationCreateView.as_view(), name='reservation_create'),
-    path('reservations/', UserReservationsView.as_view(), name='user_reservations'),
 
+    # da altro link
+    path('reservations/', UserReservationsView.as_view(), name='user_reservations'),
     path('<int:pk>/delete', ReservationDeleteView.as_view(), name='reservation_delete'),
 ]
