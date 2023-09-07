@@ -92,18 +92,3 @@ class UserReservationsView(LoginRequiredMixin, ListView):
 class ReservationDeleteView(LoginRequiredMixin, DeleteView):
     model = Reservation
     success_url = reverse_lazy('user_reservations')
-
-    # def delete(self, request, *args, **kwargs):
-    #
-    #     reservation = self.get_object()
-    #     restaurant = reservation.restaurant
-    #     # reservation.delete()
-    #
-    #     pending_reservations = Reservation.objects.filter(
-    #         restaurant=restaurant,
-    #         status='pending'
-    #     )
-    #
-    #     print(pending_reservations)
-    #
-    #     return super().delete(request, *args, **kwargs)

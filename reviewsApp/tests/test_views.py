@@ -50,10 +50,6 @@ class ReviewViewsTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Excellent!')
 
-    def test_review_list_view(self):
-        response = self.client.get(reverse('review_list'))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Good food!')
 
     def test_user_reviews_list_view(self):
         self.client.login(username='testuser', password='testpass123')

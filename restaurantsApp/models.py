@@ -67,12 +67,12 @@ class Restaurant(models.Model):
 
         today = datetime.now()
         for actual_hour in self._generate_dates(today):
-            one_hour_before = actual_hour - timedelta(hours=1)
-            two_hours_after = actual_hour + timedelta(hours=2)
+            # one_hour_before = actual_hour - timedelta(hours=1)
+            # two_hours_after = actual_hour + timedelta(hours=2)
 
             total_guests = self.reservation_set.all().filter(
-                reservation_date__gte=one_hour_before,
-                reservation_date__lt=two_hours_after,
+                reservation_date=actual_hour,
+                # reservation_date__lt=two_hours_after,
                 status='confirmed'
             ).aggregate(Sum('how_many'))["how_many__sum"]
 
@@ -81,7 +81,8 @@ class Restaurant(models.Model):
         return available_hours
 
     def get_percentage_50(self):
-        return 50*self.max_booking/100
+        return self.max_booking*50/100
+
 
 class Photo(models.Model):
     photoID = models.IntegerField(primary_key=True)

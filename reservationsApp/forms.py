@@ -13,7 +13,6 @@ class ReservationForm(forms.ModelForm):
         widgets = {
             'reservation_date': DateTimePickerInput(options={
                 "format": "DD/MM/YYYY hh",
-                "showTodayButton": True,
                 # FIXME
                 # "autoclose": True,
                 # "step": "30",

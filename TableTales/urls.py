@@ -37,7 +37,7 @@ urlpatterns = [
     # path("user/", include("restaurantsApp.urls")),
 
     # reviews
-path("user/", include("reviewsApp.urls")),
+    path("user/", include("reviewsApp.urls")),
     path("restaurants/<int:pk>/reviews/", include("reviewsApp.urls")),
 
 

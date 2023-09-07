@@ -47,7 +47,6 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-
 class UserReviewsListView(LoginRequiredMixin, ListView):
     model = Review
     template_name = 'user-object-list.html'
