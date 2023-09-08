@@ -1,10 +1,51 @@
-{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+<!DOCTYPE html>
+<html lang="it">
 
-{% block title %}Home - {{ block.super }}{% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TableTales - Home</title>
 
-{% block header %}Benvenuti su MyDjangoSite{% endblock %}
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-{% block content %}
-    <h2>Benvenuti nella nostra pagina principale!</h2>
-    <p>Questo è un esempio di pagina home per il nostro sito Django.</p>
-{% endblock %}
+    <style>
+        /* Stile per il contenuto principale */
+        .main-content {
+            display: flex;
+            height: 92vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .content {
+            text-align: center;
+        }
+
+
+
+    </style>
+</head>
+
+<body>
+
+{% include 'navbar.html' %}
+
+<div class="main-content bg-primary">
+    <div class="content">
+        <h1 class="text-white display-1">TableTales</h1>
+        <p class="lead text-white">Il tuo viaggio nel sapore inizia qui.</p>
+    </div>
+</div>
+
+<!-- Bootstrap JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
