@@ -51,6 +51,7 @@ class RestaurantListView(ListView):
     model = Restaurant
     template_name = 'restaurantsApp/restaurant_list.html'  # Specifica il percorso al tuo template
     context_object_name = 'restaurants'  # Nome del contesto da utilizzare nel template
+    paginate_by = 6
 
     def get_context_data(self, **kwargs):
         from .forms import CUISINE_CHOICES, MEAL_CHOICES
