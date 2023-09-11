@@ -4,10 +4,12 @@
 {% block modify %}
 
 
+  <div class="me-3 my-auto">
   <a class="btn btn-warning" href="{% url 'restaurant_update' obj.pk %}"><i class="fa-solid fa-pen" style="color: #ffffff;"></i></a>
+  </div>
 
-
+  <div class="my-auto">
   <a class="btn btn-warning" href="{% url 'photo_create' obj.pk %}"><i class="fa-solid fa-camera" style="color: #ffffff;"></i></a>
-
+  </div>
 
 {% endblock %}
