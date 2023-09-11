@@ -66,11 +66,15 @@
 
             <div class="row">
               {% for hour, total_guest in restaurant.available_hours_list.items %}
+
+
                 {% if total_guest == None or total_guest < restaurant.get_percentage_50 %}
-                  <p class="col-4 btn btn-sm btn-primary ms-4 me-4">{{ hour }}</p>
+                  <p class="col-3 btn btn-sm btn-primary ms-5 me-5">{{ hour }}</p>
                 {% else %}
-                  <p class="col-4 btn btn-sm btn-warning ms-4 me-4">{{ hour }}</p>
+                  <p class=" col-3 btn btn-sm btn-warning ms-5 me-5">{{ hour }}</p>
                 {% endif %}
+
+
               {% endfor %}
             </div>
 
