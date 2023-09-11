@@ -1,29 +1,12 @@
 {% extends "base.html" %}
 
-{% block css %}
-
-{#  {% load static %}#}
-{#  <link rel="stylesheet" type="text/scss" href="{% static 'TableTales/stars.scss' %}">#}
-
-{% endblock %}
-
 {% block content %}
-
   {% include 'restaurantsApp/searchbar.html' %}
-
-
   <div class="row">
-
-
       {% for r in restaurants %}
-
         {% include "restaurantsApp/single-restaurant.html" %}
-
-
       {% empty %}
         <p> Non ci sono ristoranti ancora</p>
       {% endfor %}
-
   </div>
-
 {% endblock %}

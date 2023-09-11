@@ -1,7 +1,8 @@
-from datetime import timedelta
+
 
 from django.db.models import Sum
 from django.urls import reverse_lazy
+from django.utils import timezone
 
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView
@@ -48,26 +49,27 @@ class ReservationCreateView(LoginRequiredMixin, CreateView):
 
         reservation_date = form.cleaned_data.get('reservation_date')
 
-        # Calcola l'ora 1 prima della prenotazione
-        one_hour_before = reservation_date - timedelta(hours=1)
-
-        # Calcola l'ora 2 dopo la prenotazione
-        two_hours_after = reservation_date + timedelta(hours=2)
+        # # Calcola l'ora 1 prima della prenotazione
+        # one_hour_before = reservation_date - timedelta(hours=1)
+        #
+        # # Calcola l'ora 2 dopo la prenotazione
+        # two_hours_after = reservation_date + timedelta(hours=2)
 
         total_guests = Reservation.objects.filter(
             restaurant=restaurant,
-            reservation_date__gte=one_hour_before,
-            reservation_date__lt=two_hours_after,
+            reservation_date=reservation_date,
             status='confirmed'
-        ).aggregate(Sum('how_many'))["how_many__sum"]
-
-        if total_guests is None:
-            total_guests = 0
+        ).aggregate(Sum('how_many'))["how_many__sum"] or 0
 
         if restaurant.max_booking - total_guests >= how_many:
             form.instance.status = 'confirmed'
         else:
             form.instance.status = 'pending'
+
+        if reservation_date <= timezone.now():
+            # Aggiungi un errore al form
+            form.add_error('reservation_date', 'La data di prenotazione deve essere futura.')
+            return super().form_invalid(form)
 
         return super().form_valid(form)
 
