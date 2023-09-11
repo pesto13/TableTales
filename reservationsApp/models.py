@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.template.defaultfilters import linebreaksbr
 
@@ -18,7 +19,7 @@ class Reservation(models.Model):
         ('cancelled', 'Cancellata'),
     ]
     status = models.CharField(max_length=20, choices=STATUS_CHOICES)
-    how_many = models.IntegerField()
+    how_many = models.IntegerField(validators=[MinValueValidator(1)])
 
     def __str__(self):
         return f"Reservation for {self.restaurant.name} by {self.username} with {self.how_many} people"

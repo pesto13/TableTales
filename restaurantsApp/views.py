@@ -115,9 +115,14 @@ class RestaurantDetailView(DetailView):
         if self.request.user.is_authenticated:
             user = self.request.user
             ur = UserRecommendations(self.request.user, Review.objects.all().filter(username=user))
-            ur.calculate_coefficients()
+            ur.calculate_review_coefficients()
 
-            context['recommend_restaurant_list'] = ur.get_recommended_restaurants(Restaurant.objects.all().exclude(restaurantID=self.object.restaurantID))
+            context['recommend_restaurant_list'] = ur.get_recommended_restaurants(
+                # tutti i ristoranti tranne quello attuale
+                Restaurant.objects.all().exclude(restaurantID=self.object.restaurantID),
+                # il ristorante attuale
+                self.object
+            )
         return context
 
 
